@@ -1,3 +1,18 @@
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+  </script>
+  <script type="module">
+    import '@material/web/all.js';
+    import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+
+    document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+  </script>
+
 <header class="header">
   <nav class="flex-row flex-space-between no-decoration">
     <div class="header-logo">
@@ -5,7 +20,9 @@
     </div>
     <div class="header-menu">
       {{- range site.menu.main }}
-        <a href="{{ .URL }}">{{ .Name }}</a>
+        <md-icon-button href="{{ .URL }}">
+          <md-icon>{{ .Name }}</md-icon>
+        </md-icon-button>
       {{- end }}
     </div>
   </nav>

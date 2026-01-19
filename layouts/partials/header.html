@@ -5,7 +5,11 @@
     </div>
     <div class="header-menu">
       {{- range site.Menus.main }}
-        <a href="{{ .URL }}">{{ .Name }}</a>
+        <a href="{{ .URL }}" class="menu-item">
+          {{- if .Params.icon }}
+            <md-icon>{{ .Params.icon }}</md-icon>
+          {{- end }}
+        </a>
       {{- end }}
     </div>
   </nav>

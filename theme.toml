@@ -1,11 +1,11 @@
 # theme.toml template for a Hugo theme
 # See https://github.com/gohugoio/hugoThemes#themetoml for an example
 
-name = "hugo-blog-theme"
+name = "material-design-blog-theme"
 license = "MIT"
-licenselink = "https://github.com/m1yam0t0/hugo-blog-theme/blob/main/LICENSE"
-description = "A hugo theme for m1yam0t0's blog"
-homepage = "http://github.com/m1yam0t0/hugo-blog-theme"
+licenselink = "https://github.com/kons10/material-blog-theme/edit/main/LICENSE"
+description = "A blog hugo theme with Material Design"
+homepage = "https://github.com/kons10/material-blog-theme"
 tags = [
   "blog",
   "minimal",
@@ -17,5 +17,5 @@ features = [
 min_version = "0.101.0"
 
 [author]
-  name = "m1yam0t0"
-  homepage = "https://m1yam0t0.com/"
+  name = "Sio"
+  homepage = "https://site.kto.f5.si/"

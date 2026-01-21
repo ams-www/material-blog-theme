@@ -99,8 +99,20 @@ table {
   font-weight: bold;
 }
 
+.header-menu {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .header-menu a {
-  margin-left: 20px;
+  margin-left: 0;
+  text-decoration: none;
+  color: black;
+}
+
+.header-menu md-icon-button {
+  display: inline-flex;
 }
 
 .footer {

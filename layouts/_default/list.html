@@ -25,8 +25,8 @@
           <time class="metadata" datetime="{{ .Date }}">
             {{- .Date | time.Format (default "2006/01/02" site.Params.DateFormat) -}}
           </time>
-          <a> {{- .Title -}} </a>
-          {{ if $summary }}{{ .Summary }}{{ end }}
+          <div slot="headline"> {{- .Title -}} </div>
+          <div slot="supporting-text"> {{ if $summary }}{{ .Summary }}{{ end }} </div>
          </md-list-item>
       </md-list>
     {{- end }}

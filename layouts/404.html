@@ -1,3 +1,13 @@
 {{- define "main" }}
-  <div class="not-found">404 - Page not found</div>
+  <md-dialog type="alert">
+  <div slot="headline">404 - Page not found</div>
+  <form slot="content" id="form-id" method="dialog">
+    OK?
+  </form>
+  <div slot="actions">
+    <md-text-button form="form-id" onclick="history.back()">Go to Top</md-text-button>
+    <md-text-button form="form-id" href="/">Back</md-text-button>
+  </div>
+</md-dialog>
+</div>
 {{- end }}

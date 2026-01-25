@@ -18,7 +18,6 @@
   {{- end }}
 
 
-  <ol class="index list-none no-padding">
     {{- range $paginator.Pages }}
       <md-list class="{{ $flex }}">
          <md-list-item type="link" href="{{ .Permalink | relURL }}">
@@ -30,7 +29,6 @@
          </md-list-item>
       </md-list>
     {{- end }}
-  </ol>
 
   {{ template "_internal/pagination.html" . }}
 

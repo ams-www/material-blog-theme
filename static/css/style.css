@@ -98,9 +98,6 @@ table {
   font-weight: bold;
 }
 
-.header-menu a {
-  margin-left: 20px;
-}
 
 .footer {
   background-color: var(--background-color);
@@ -148,9 +145,3 @@ table {
   color: var(--meta-color);
 }
 
-.not-found {
-  font-size: 42px;
-  font-weight: bold;
-  padding: 100px 0;
-  text-align: center;
-}

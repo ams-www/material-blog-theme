@@ -19,3 +19,7 @@ min_version = "0.101.0"
 [author]
   name = "Sio"
   homepage = "https://site.kto.f5.si/"
+
+[markup.highlight]
+  codeFences = false
+  noClasses = false

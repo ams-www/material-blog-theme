@@ -21,22 +21,24 @@
 
 <link rel="stylesheet" href="/css/style.css" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- 軽量フォント: Bunny Fonts（プライバシー重視、キャッシュ効率高） -->
+<link rel="preconnect" href="https://fonts.bunny.net" />
 <link
   rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Noto+Sans+Mono&display=swap"
+  href="https://fonts.bunny.net/css?family=noto-sans-jp:400,700|noto-sans-mono:400"
 />
 
+<!-- 軽量コード強調表示: speed-highlight core（約2kB） -->
 <link
   rel="stylesheet"
-  href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/nord.min.css"
+  href="https://unpkg.com/@speed-highlight/core/dist/themes/default.css"
 />
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
-<script>
-  hljs.highlightAll();
+<script type="module">
+  import { highlightAll } from 'https://unpkg.com/@speed-highlight/core/dist/index.js';
+  highlightAll();
 </script>
 
+<!-- Material Web Components -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 <script type="importmap">
     {

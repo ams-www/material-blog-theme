@@ -11,7 +11,7 @@
   {{- end }}
   {{- $paginator := .Paginate $pages }}
 
-
+<md-list>
   <h1>{{ $title }}</h1>
   {{ if .IsHome -}}
     <h3>{{ site.Params.description }}</h3>
@@ -19,7 +19,6 @@
 
 
     {{- range $paginator.Pages }}
-      <md-list class="{{ $flex }}">
          <md-list-item type="link" href="{{ .Permalink | relURL }}">
           <time class="metadata" datetime="{{ .Date }}">
             {{- .Date | time.Format (default "2006/01/02" site.Params.DateFormat) -}}
@@ -27,9 +26,8 @@
           <div slot="headline"> {{- .Title -}} </div>
           <div slot="supporting-text"> {{ if $summary }}{{ .Summary }}{{ end }} </div>
          </md-list-item>
-      </md-list>
     {{- end }}
-
+</md-list>
   {{ template "_internal/pagination.html" . }}
 
 {{- end }}

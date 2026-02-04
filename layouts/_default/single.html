@@ -12,7 +12,10 @@
     <div class="metadata">
       Tags:
       {{- range ($.GetTerms "tags") }}
-        <a href="{{ .Permalink | relURL }}">{{ .LinkTitle }}</a>
+        <md-filled-tonal-button href="{{ .Permalink | relURL }}">
+          <md-icon>tag</md-icon>
+          {{ .LinkTitle }}
+        </md-filled-tonal-button>
       {{- end }}
     </div>
   {{- end }}

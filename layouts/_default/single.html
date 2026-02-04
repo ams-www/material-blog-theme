@@ -13,7 +13,7 @@
       Tags:
       {{- range ($.GetTerms "tags") }}
         <md-filled-tonal-button href="{{ .Permalink | relURL }}">
-          <md-icon>tag</md-icon>
+          <md-icon slot="icon">tag</md-icon>
           {{ .LinkTitle }}
         </md-filled-tonal-button>
       {{- end }}

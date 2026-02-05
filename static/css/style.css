@@ -12,7 +12,6 @@ html {
 
 body {
   font-family: "Noto Sans JP", sans-serif;
-  margin: auto;
   padding: 0;
 }
 
@@ -87,7 +86,6 @@ table {
   background-color: var(--background-color);
   border-bottom: 1px solid;
   border-color: var(--border-color);
-  line-height: 20px;
   position: sticky;
   top: 0;
   z-index: 100;

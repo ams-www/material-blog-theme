@@ -6,13 +6,10 @@
   --hljs-color: #d8dee9;
 }
 
-html {
-  margin: auto;
-}
-
 body {
   font-family: "Noto Sans JP", sans-serif;
   padding: 0;
+  margin: 0;
 }
 
 code {

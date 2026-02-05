@@ -4,7 +4,7 @@
 name = "material-design-blog-theme"
 license = "MIT"
 licenselink = "https://github.com/kons10/material-blog-theme/tree/main/LICENSE"
-description = "A blog hugo theme with Material Design"
+description = "A blog hugo theme with Material Design 3"
 homepage = "https://github.com/kons10/material-blog-theme"
 tags = [
   "blog",

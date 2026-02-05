@@ -4,7 +4,10 @@
   <ul class="terms flex-row flex-wrap list-none">
     {{- range .Pages }}
       <li>
-        <a href="{{ .Permalink | relURL }}">{{ .Title }}</a>
+        <md-filled-tonal-button href="{{ .Permalink | relURL }}">
+          <md-icon slot="icon">tag</md-icon>
+          {{ .Title }}
+        </md-filled-tonal-button>
       </li>
     {{- end }}
   </ul>

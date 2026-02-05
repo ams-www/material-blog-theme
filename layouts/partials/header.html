@@ -10,7 +10,7 @@
             <md-icon>{{ .Params.icon }}</md-icon>
           </md-icon-button>
         {{- else }}
-          <a href="{{ .URL }}">{{ .Name }}</a>
+          <md-text-button href="{{ .URL }}">{{ .Name }}</md-text-button>
         {{- end }}
       {{- end }}
     </div>

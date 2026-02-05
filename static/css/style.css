@@ -84,8 +84,6 @@ table {
 
 .header {
   background-color: var(--background-color);
-  border-bottom: 1px solid;
-  border-color: var(--border-color);
   position: sticky;
   top: 0;
   z-index: 100;

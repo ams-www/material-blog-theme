@@ -1,9 +1,20 @@
 <header class="header">
-  <nav class="flex-row flex-space-between no-decoration">
-    <div class="header-logo">
-      <a href="/">{{ site.Title }}</a>
+  <nav class="flex-row flex-space-between no-decoration" style="align-items: center; padding: 0 4px;">
+    <div class="header-leading" style="display: flex; min-width: 48px;">
+      {{- if not .IsHome }}
+        <md-icon-button onclick="history.back()" aria-label="Back">
+          <md-icon>arrow_back</md-icon>
+        </md-icon-button>
+      {{- end }}
     </div>
-    <div class="header-menu">
+
+    <div class="header-title" style="flex-grow: 1; padding-left: 12px;">
+      <a href="/" style="text-decoration: none; color: inherit;">
+        {{- if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }}{{ end -}}
+      </a>
+    </div>
+
+    <div class="header-menu" style="display: flex;">
       {{- range site.Menus.main }}
         {{- if .Params.icon }}
           <md-icon-button href="{{ .URL }}" aria-label="{{ .Name }}">
@@ -15,5 +26,8 @@
       {{- end }}
     </div>
   </nav>
-  <md-linear-progress id="reading-progress" value="0" style="width: 100%; --md-linear-progress-active-indicator-height: 4px;"></md-linear-progress>
+
+  {{- if site.Params.readingtime }}
+    <md-linear-progress id="reading-progress" value="0" max="100"></md-linear-progress>
+  {{- end }}
 </header>

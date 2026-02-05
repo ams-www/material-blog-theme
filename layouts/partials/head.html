@@ -42,3 +42,19 @@
 {{ if hugo.IsProduction -}}
   {{ template "_internal/google_analytics.html" . }}
 {{ end -}}
+<!-- プログレスバー By Gemini with ♡ -->
+<script type="module">
+  // 記事ページ（single.html）の場合のみバーを表示して動かす
+  if (document.querySelector('.main article') || window.location.pathname !== "/") {
+    const progressBar = document.getElementById('reading-progress');
+    if (progressBar) {
+      progressBar.style.display = 'block';
+
+      window.addEventListener('scroll', () => {
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = window.scrollY / totalHeight;
+        progressBar.value = progress;
+      });
+    }
+  }
+</script>

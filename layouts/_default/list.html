@@ -28,6 +28,33 @@
          </md-list-item>
     {{- end }}
 </md-list>
-  {{ template "_internal/pagination.html" . }}
+{{ $paginator := .Paginator }}
+{{ if gt $paginator.TotalPages 1 }}
+<nav class="pagination-mwc flex-row flex-space-evenly" style="margin-top: 20px;">
+  <md-icon-button href="{{ $paginator.First.URL }}" {{ if not $paginator.HasPrev }}disabled{{ end }}>
+    <md-icon>first_page</md-icon>
+  </md-icon-button>
+
+  <md-icon-button href="{{ if $paginator.HasPrev }}{{ $paginator.Prev.URL }}{{ end }}" {{ if not $paginator.HasPrev }}disabled{{ end }}>
+    <md-icon>navigate_before</md-icon>
+  </md-icon-button>
+
+  {{ range $paginator.Pagers }}
+    {{ if eq . $paginator }}
+      <md-filled-button>{{ .PageNumber }}</md-filled-button>
+    {{ else }}
+      <md-text-button href="{{ .URL }}">{{ .PageNumber }}</md-text-button>
+    {{ end }}
+  {{ end }}
+
+  <md-icon-button href="{{ if $paginator.HasNext }}{{ $paginator.Next.URL }}{{ end }}" {{ if not $paginator.HasNext }}disabled{{ end }}>
+    <md-icon>navigate_next</md-icon>
+  </md-icon-button>
+
+  <md-icon-button href="{{ $paginator.Last.URL }}" {{ if not $paginator.HasNext }}disabled{{ end }}>
+    <md-icon>last_page</md-icon>
+  </md-icon-button>
+</nav>
+{{ end }}
 
 {{- end }}

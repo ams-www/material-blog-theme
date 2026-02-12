@@ -90,7 +90,6 @@ header {
   position: absolute;
   bottom: 0;
   left: 0;
-  display: none; /* デフォルトは非表示（記事ページのみで動かすため） */
 }
 
 .header-logo a {

@@ -1,8 +1,22 @@
 <footer class="footer">
-  <ul class="flex-row flex-space-evenly list-none no-decoration no-padding">
-    {{- range site.Params.social }}
-      <li><a href="{{ .url }}">{{ .name }}</a></li>
-    {{- end }}
-  </ul>
-  <p class="metadata">{{ site.Copyright }}</p>
+  <div class="flex-column" style="gap: 16px; padding: 24px 16px;">
+    <nav class="flex-row flex-wrap flex-space-evenly" style="gap: 8px;">
+      {{- range site.Params.social }}
+        <md-text-button href="{{ .url }}">
+          {{ .name }}
+        </md-text-button>
+      {{- end }}
+    </nav>
+
+    <div class="flex-column" style="align-items: center; gap: 4px;">
+      <p class="metadata" style="margin: 0; font-size: 0.85rem;">
+        {{ site.Copyright }}
+      </p>
+      {{ if site.Author.name }}
+        <p class="metadata" style="margin: 0; font-size: 0.75rem;">
+          Maintained by {{ site.Author.name }}
+        </p>
+      {{ end }}
+    </div>
+  </div>
 </footer>

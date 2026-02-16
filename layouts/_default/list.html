@@ -24,7 +24,7 @@
             {{- .Date | time.Format (default "2006/01/02" site.Params.DateFormat) -}}
           </time>
           <div slot="headline"> {{- .Title -}} </div>
-          <div slot="supporting-text"> {{ if $summary }}{{ .Summary }}{{ end }} </div>
+          <div slot="supporting-text"> {{ if $summary }}{{ .Summary | plainify | truncate 150 }}{{ end }} </div>
          </md-list-item>
     {{- end }}
 </md-list>

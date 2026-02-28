@@ -12,11 +12,11 @@
       <p class="metadata" style="margin: 0; font-size: 0.85rem;">
         {{ site.Copyright }}
       </p>
-      {{ if site.Author.name }}
-        <p class="metadata" style="margin: 0; font-size: 0.75rem;">
-          Maintained by {{ site.Author.name }}
-        </p>
-      {{ end }}
+    {{ if site.Params.author }}
+    <p class="metadata" style="margin: 0; font-size: 0.75rem;">
+       {{ site.Params.author }}
+    </p>
+{{ end }}
     </div>
   </div>
 </footer>

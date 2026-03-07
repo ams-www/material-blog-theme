@@ -1,3 +1,4 @@
+<div class="header-all">
 <header class="header">
   <nav class="flex-row flex-space-between no-decoration" style="align-items: center; padding: 0 4px;">
     <div class="header-leading" style="display: flex; min-width: 48px;">
@@ -26,8 +27,10 @@
       {{- end }}
     </div>
   </nav>
+</header>
+
 <!-- Read Progress Bar-->
     {{- if not .IsHome }}
     <md-linear-progress id="reading-progress" value="0" style="width: 100%; --md-linear-progress-active-indicator-height: 4px;"></md-linear-progress>
     {{- end }}
-</header>
+</div>

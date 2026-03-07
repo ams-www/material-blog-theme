@@ -7,7 +7,7 @@ A blog hugo theme with Material Design
 ```sh
 mkdir theme
 cd theme
-git submodule add https://github.com/kons10/material-blog-theme.git material
+git submodule add https://github.com/ams-www/material-blog-theme.git material
 ```
 
 ## Update
@@ -60,9 +60,9 @@ This is a example configuration.
 ```toml
 [[Params.social]]
   name = "GitHub"
-  url = "https://github.com/m1yam0t0"
+  url = "https://github.com/kons10"
 
 [[Params.social]]
-  name = "Twitter"
-  url = "https://twitter.com/m1yam0t0"
+  name = "Misskey"
+  url = "https://misskey.io/@heroblineg"
 ```

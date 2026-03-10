@@ -54,7 +54,7 @@ table {
 }
 
 .main {
-  padding: 0px 20px;
+  padding: 0px 0px;
 }
 
 .index li {
@@ -86,7 +86,7 @@ table {
   z-index: 100;
   background-color: var(--background-color);
   /* 影を一番下の要素（バーがあればバー、なければヘッダー）のさらに下に落とす */
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
 }
 
 .header {

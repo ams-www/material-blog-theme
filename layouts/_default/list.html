@@ -11,50 +11,85 @@
   {{- end }}
   {{- $paginator := .Paginate $pages }}
 
-<md-list>
+<div class="list-container">
   <h1>{{ $title }}</h1>
   {{ if .IsHome -}}
     <h3>{{ site.Params.description }}</h3>
   {{- end }}
 
+  <!-- JS無効時の標準HTMLフォールバック -->
+  <noscript>
+    <ul class="fallback-list" style="list-style: none; padding: 0;">
+      {{- range $paginator.Pages }}
+        <li style="margin-bottom: 16px; border-bottom: 1px solid #ccc; padding-bottom: 8px;">
+          <a href="{{ .Permalink | relURL }}" style="text-decoration: none; color: inherit;">
+            <time style="font-size: 0.8rem; color: #666;" datetime="{{ .Date }}">
+              {{- .Date | time.Format (default "2006/01/02" site.Params.DateFormat) -}}
+            </time>
+            <div style="font-size: 1.2rem; font-weight: bold; margin: 4px 0;">{{ .Title }}</div>
+            <div style="font-size: 0.9rem; color: #444;">
+              {{ if $summary }}{{ .Summary | plainify | truncate 100 }}{{ end }}
+            </div>
+          </a>
+        </li>
+      {{- end }}
+    </ul>
+  </noscript>
 
+  <!-- JS有効時に表示されるMaterial Web Components -->
+  <md-list class="main-content-list" style="display: none;">
     {{- range $paginator.Pages }}
          <md-list-item type="link" href="{{ .Permalink | relURL }}">
-          <time class="metadata" datetime="{{ .Date }}">
+          <time slot="start" class="metadata" datetime="{{ .Date }}" style="font-size: 0.8em; opacity: 0.7;">
             {{- .Date | time.Format (default "2006/01/02" site.Params.DateFormat) -}}
           </time>
           <div slot="headline"> {{- .Title -}} </div>
           <div slot="supporting-text"> {{ if $summary }}{{ .Summary | plainify | truncate 100 }}{{ end }} </div>
          </md-list-item>
     {{- end }}
-</md-list>
-{{ $paginator := .Paginator }}
-{{ if gt $paginator.TotalPages 1 }}
-<nav class="pagination-mwc flex-row flex-space-evenly" style="margin-top: 20px;">
-  <md-icon-button href="{{ $paginator.First.URL }}" {{ if not $paginator.HasPrev }}disabled{{ end }}>
-    <md-icon>first_page</md-icon>
-  </md-icon-button>
+  </md-list>
 
-  <md-icon-button href="{{ if $paginator.HasPrev }}{{ $paginator.Prev.URL }}{{ end }}" {{ if not $paginator.HasPrev }}disabled{{ end }}>
-    <md-icon>navigate_before</md-icon>
-  </md-icon-button>
+  {{ if gt $paginator.TotalPages 1 }}
+    <!-- JS有効時用ページネーション -->
+    <nav class="pagination-mwc main-content-list flex-row flex-space-evenly" style="margin-top: 20px; display: none;">
+      <md-icon-button href="{{ $paginator.First.URL }}" {{ if not $paginator.HasPrev }}disabled{{ end }}>
+        <md-icon>first_page</md-icon>
+      </md-icon-button>
 
-  {{ range $paginator.Pagers }}
-    {{ if eq . $paginator }}
-      <md-filled-button>{{ .PageNumber }}</md-filled-button>
-    {{ else }}
-      <md-text-button href="{{ .URL }}">{{ .PageNumber }}</md-text-button>
-    {{ end }}
+      <md-icon-button href="{{ if $paginator.HasPrev }}{{ $paginator.Prev.URL }}{{ end }}" {{ if not $paginator.HasPrev }}disabled{{ end }}>
+        <md-icon>navigate_before</md-icon>
+      </md-icon-button>
+
+      {{ range $paginator.Pagers }}
+        {{ if eq . $paginator }}
+          <md-filled-button>{{ .PageNumber }}</md-filled-button>
+        {{ else }}
+          <md-text-button href="{{ .URL }}">{{ .PageNumber }}</md-text-button>
+        {{ end }}
+      {{ end }}
+
+      <md-icon-button href="{{ if $paginator.HasNext }}{{ $paginator.Next.URL }}{{ end }}" {{ if not $paginator.HasNext }}disabled{{ end }}>
+        <md-icon>navigate_next</md-icon>
+      </md-icon-button>
+
+      <md-icon-button href="{{ $paginator.Last.URL }}" {{ if not $paginator.HasNext }}disabled{{ end }}>
+        <md-icon>last_page</md-icon>
+      </md-icon-button>
+    </nav>
+
+    <!-- JS無効時用ページネーション -->
+    <noscript>
+      <nav class="pagination-fallback" style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+        {{ if $paginator.HasPrev }}
+          <a href="{{ $paginator.Prev.URL }}">前へ</a>
+        {{ end }}
+        <span>{{ $paginator.PageNumber }} / {{ $paginator.TotalPages }}</span>
+        {{ if $paginator.HasNext }}
+          <a href="{{ $paginator.Next.URL }}">次へ</a>
+        {{ end }}
+      </nav>
+    </noscript>
   {{ end }}
-
-  <md-icon-button href="{{ if $paginator.HasNext }}{{ $paginator.Next.URL }}{{ end }}" {{ if not $paginator.HasNext }}disabled{{ end }}>
-    <md-icon>navigate_next</md-icon>
-  </md-icon-button>
-
-  <md-icon-button href="{{ $paginator.Last.URL }}" {{ if not $paginator.HasNext }}disabled{{ end }}>
-    <md-icon>last_page</md-icon>
-  </md-icon-button>
-</nav>
-{{ end }}
+</div>
 
 {{- end }}

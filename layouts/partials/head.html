@@ -60,3 +60,12 @@
   // JSが有効ならhtmlタグにクラスをつける
   document.documentElement.classList.add('js-enabled');
 </script>
+<style>
+  /* JSが有効なときだけ .main-content-list を表示し、noscriptは自動で消える */
+.js-enabled .main-content-list {
+  display: flex !important; /* nav用 */
+}
+.js-enabled md-list.main-content-list {
+  display: block !important; /* リスト用 */
+}
+</style>

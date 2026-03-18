@@ -4,14 +4,14 @@
     <div class="header-leading" style="display: flex; min-width: 48px;">
       {{- if not .IsHome }}
         <md-icon-button onclick="history.back()" aria-label="Back">
-          <md-icon>arrow_back</md-icon>
+          <md-icon>menu</md-icon>
         </md-icon-button>
       {{- end }}
     </div>
 
     <div class="header-title" style="flex-grow: 1;">
       <a href="/" style="text-decoration: none; color: inherit;">
-        {{- if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }}{{ end -}}
+        {{ site.Title }}
       </a>
     </div>
 

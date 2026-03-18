@@ -17,79 +17,69 @@
     <h3>{{ site.Params.description }}</h3>
   {{- end }}
 
-  <!-- JS無効時の標準HTMLフォールバック -->
+  <!-- [JS無効時] 標準HTMLでリストを表示 -->
   <noscript>
-    <ul class="fallback-list" style="list-style: none; padding: 0;">
+    <ul class="fallback-list">
       {{- range $paginator.Pages }}
-        <li style="margin-bottom: 16px; border-bottom: 1px solid #ccc; padding-bottom: 8px;">
-          <a href="{{ .Permalink | relURL }}" style="text-decoration: none; color: inherit;">
-            <time style="font-size: 0.8rem; color: #666;" datetime="{{ .Date }}">
-              {{- .Date | time.Format (default "2006/01/02" site.Params.DateFormat) -}}
-            </time>
-            <div style="font-size: 1.2rem; font-weight: bold; margin: 4px 0;">{{ .Title }}</div>
-            <div style="font-size: 0.9rem; color: #444;">
-              {{ if $summary }}{{ .Summary | plainify | truncate 100 }}{{ end }}
-            </div>
+        <li>
+          <a href="{{ .Permalink | relURL }}">
+            {{- .Date | time.Format (default "2006/01/02" site.Params.DateFormat) -}} - {{ .Title }}
           </a>
         </li>
       {{- end }}
     </ul>
   </noscript>
 
-  <!-- JS有効時に表示されるMaterial Web Components -->
+  <!-- [JS有効時] 原版のMaterial構造をそのまま保持 -->
   <md-list class="main-content-list" style="display: none;">
     {{- range $paginator.Pages }}
          <md-list-item type="link" href="{{ .Permalink | relURL }}">
-          <time slot="start" class="metadata" datetime="{{ .Date }}" style="font-size: 0.8em; opacity: 0.7;">
+          <time class="metadata" datetime="{{ .Date }}">
             {{- .Date | time.Format (default "2006/01/02" site.Params.DateFormat) -}}
           </time>
           <div slot="headline"> {{- .Title -}} </div>
           <div slot="supporting-text"> {{ if $summary }}{{ .Summary | plainify | truncate 100 }}{{ end }} </div>
          </md-list-item>
     {{- end }}
-  </md-list>
+</md-list>
 
-  {{ if gt $paginator.TotalPages 1 }}
-    <!-- JS有効時用ページネーション -->
-    <nav class="pagination-mwc main-content-list flex-row flex-space-evenly" style="margin-top: 20px; display: none;">
-      <md-icon-button href="{{ $paginator.First.URL }}" {{ if not $paginator.HasPrev }}disabled{{ end }}>
-        <md-icon>first_page</md-icon>
-      </md-icon-button>
+{{ if gt $paginator.TotalPages 1 }}
+<!-- [JS有効時] 原版のページネーション構造 -->
+<nav class="pagination-mwc main-content-list flex-row flex-space-evenly" style="margin-top: 20px; display: none;">
+  <md-icon-button href="{{ $paginator.First.URL }}" {{ if not $paginator.HasPrev }}disabled{{ end }}>
+    <md-icon>first_page</md-icon>
+  </md-icon-button>
 
-      <md-icon-button href="{{ if $paginator.HasPrev }}{{ $paginator.Prev.URL }}{{ end }}" {{ if not $paginator.HasPrev }}disabled{{ end }}>
-        <md-icon>navigate_before</md-icon>
-      </md-icon-button>
+  <md-icon-button href="{{ if $paginator.HasPrev }}{{ $paginator.Prev.URL }}{{ end }}" {{ if not $paginator.HasPrev }}disabled{{ end }}>
+    <md-icon>navigate_before</md-icon>
+  </md-icon-button>
 
-      {{ range $paginator.Pagers }}
-        {{ if eq . $paginator }}
-          <md-filled-button>{{ .PageNumber }}</md-filled-button>
-        {{ else }}
-          <md-text-button href="{{ .URL }}">{{ .PageNumber }}</md-text-button>
-        {{ end }}
-      {{ end }}
-
-      <md-icon-button href="{{ if $paginator.HasNext }}{{ $paginator.Next.URL }}{{ end }}" {{ if not $paginator.HasNext }}disabled{{ end }}>
-        <md-icon>navigate_next</md-icon>
-      </md-icon-button>
-
-      <md-icon-button href="{{ $paginator.Last.URL }}" {{ if not $paginator.HasNext }}disabled{{ end }}>
-        <md-icon>last_page</md-icon>
-      </md-icon-button>
-    </nav>
-
-    <!-- JS無効時用ページネーション -->
-    <noscript>
-      <nav class="pagination-fallback" style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
-        {{ if $paginator.HasPrev }}
-          <a href="{{ $paginator.Prev.URL }}">前へ</a>
-        {{ end }}
-        <span>{{ $paginator.PageNumber }} / {{ $paginator.TotalPages }}</span>
-        {{ if $paginator.HasNext }}
-          <a href="{{ $paginator.Next.URL }}">次へ</a>
-        {{ end }}
-      </nav>
-    </noscript>
+  {{ range $paginator.Pagers }}
+    {{ if eq . $paginator }}
+      <md-filled-button>{{ .PageNumber }}</md-filled-button>
+    {{ else }}
+      <md-text-button href="{{ .URL }}">{{ .PageNumber }}</md-text-button>
+    {{ end }}
   {{ end }}
+
+  <md-icon-button href="{{ if $paginator.HasNext }}{{ $paginator.Next.URL }}{{ end }}" {{ if not $paginator.HasNext }}disabled{{ end }}>
+    <md-icon>navigate_next</md-icon>
+  </md-icon-button>
+
+  <md-icon-button href="{{ $paginator.Last.URL }}" {{ if not $paginator.HasNext }}disabled{{ end }}>
+    <md-icon>last_page</md-icon>
+  </md-icon-button>
+</nav>
+
+<!-- [JS無効時] ページネーションのリンクを確保 -->
+<noscript>
+  <nav class="pagination-fallback" style="text-align: center; margin-top: 20px;">
+    {{ if $paginator.HasPrev }}<a href="{{ $paginator.Prev.URL }}">Previous</a>{{ end }}
+    <span>Page {{ $paginator.PageNumber }} of {{ $paginator.TotalPages }}</span>
+    {{ if $paginator.HasNext }}<a href="{{ $paginator.Next.URL }}">Next</a>{{ end }}
+  </nav>
+</noscript>
+{{ end }}
 </div>
 
 {{- end }}

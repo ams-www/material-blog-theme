@@ -1,7 +1,7 @@
 @import url("dark.css") (prefers-color-scheme: dark);
 @import url("light.css") (prefers-color-scheme: light);
 
-:root {
+.light, .dark {
   /* Material Design 3 のトークンへマッピング */
   --background-color: var(--md-sys-color-surface);
   --on-background-color: var(--md-sys-color-on-surface);

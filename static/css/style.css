@@ -1,4 +1,3 @@
-<!--CSSの動的読み込み-->
 @import url("dark.css") (prefers-color-scheme: dark);
 @import url("light.css") (prefers-color-scheme: light);
 

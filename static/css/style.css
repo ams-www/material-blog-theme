@@ -1,6 +1,6 @@
 <!--CSSの動的読み込み-->
-@import url("css/dark.css") (prefers-color-scheme: dark);
-@import url("css/light.css") (prefers-color-scheme: light);
+@import url("dark.css") (prefers-color-scheme: dark);
+@import url("light.css") (prefers-color-scheme: light);
 
 :root {
   /* Material Design 3 のトークンへマッピング */

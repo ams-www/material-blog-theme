@@ -1,31 +1,20 @@
 @import url("dark.css") (prefers-color-scheme: dark);
 @import url("light.css") (prefers-color-scheme: light);
 
-.light, .dark {
-  /* Material Design 3 のトークンへマッピング */
-  --background-color: var(--md-sys-color-surface);
-  --on-background-color: var(--md-sys-color-on-surface);
-  --meta-color: var(--md-sys-color-on-surface-variant);
-  --border-color: var(--md-sys-color-outline-variant);
-  
-  /* コードブロック用の配色もシステムカラーに合わせる */
-  --hljs-background-color: var(--md-sys-color-surface-container-high);
-  --hljs-color: var(--md-sys-color-on-surface);
-}
 
 body {
   font-family: "Noto Sans JP", sans-serif;
   padding: 0;
   margin: 0;
   /* 背景色と文字色をトークンから適用 */
-  background-color: var(--background-color);
-  color: var(--on-background-color);
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
 }
 
 code {
-  background-color: var(--hljs-background-color);
+  background-color: var(--md-sys-color-surface-container-high);
   border-radius: 3px;
-  color: var(--hljs-color);
+  color: var(--md-sys-color-on-surface);
   font-family: "Noto Sans Mono", monospace;
   padding: 0 5px;
 }
@@ -38,28 +27,28 @@ img {
 
 table {
   border-collapse: collapse;
-  color: var(--on-background-color);
+  color: var(--md-sys-color-on-surface);
 
   & thead {
     & th {
-      border-top: solid 1px var(--border-color);
-      border-bottom: solid 1px var(--border-color);
+      border-top: solid 1px var(--md-sys-color-outline-variant);
+      border-bottom: solid 1px var(--md-sys-color-outline-variant);
       padding: 8px;
     }
 
     & th:not(:first-child) {
-      border-left: solid 1px var(--border-color);
+      border-left: solid 1px var(--md-sys-color-outline-variant);
     }
   }
 
   & tbody {
     & td {
-      border-bottom: dashed 1px var(--border-color);
+      border-bottom: dashed 1px var(--md-sys-color-outline-variant);
       padding: 5px 10px;
     }
 
     & td:not(:first-child) {
-      border-left: solid 1px var(--border-color);
+      border-left: solid 1px var(--md-sys-color-outline-variant);
     }
   }
 }
@@ -69,7 +58,7 @@ table {
 }
 
 .index li {
-  border-bottom: 1px dashed var(--border-color);
+  border-bottom: 1px dashed var(--md-sys-color-outline-variant);
   margin: 10px 0 10px 0;
 }
 
@@ -93,7 +82,7 @@ table {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: var(--background-color);
+  background-color: var(--md-sys-color-surface);
   /* 影の色もMaterialの影（scrimやshadow）を使うとより馴染むよ */
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
@@ -116,8 +105,8 @@ table {
 }
 
 .footer {
-  background-color: var(--background-color);
-  border-top: 1px solid var(--border-color);
+  background-color: var(--md-sys-color-surface);
+  border-top: 1px solid var(--md-sys-color-outline-variant);
   text-align: center;
 }
 
@@ -153,10 +142,10 @@ table {
 
 .no-decoration a {
   /* 固定の black ではなく、システムカラーの文字色を適用 */
-  color: var(--on-background-color);
+  color: var(--md-sys-color-on-surface);
   text-decoration: none;
 }
 
 .metadata {
-  color: var(--meta-color);
+  color: var(--md-sys-color-on-surface-variant);
 }

@@ -36,6 +36,10 @@
 
     document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
 </script>
+<script>
+  // JSが有効ならhtmlタグにクラスをつける
+  document.documentElement.classList.add('js-enabled');
+</script>
 
 {{ if hugo.IsProduction -}}
   {{ template "_internal/google_analytics.html" . }}

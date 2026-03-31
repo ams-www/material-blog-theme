@@ -20,8 +20,8 @@
   <meta name="robots" content="noindex, nofollow" />
 {{ end -}}
 
-
-<link rel="stylesheet" href="/css/style.css" />
+{{- $style := resources.Get "css/style.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
 
 <!-- Material Web Components -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />

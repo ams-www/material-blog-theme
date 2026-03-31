@@ -1,0 +1,19 @@
+# Default configuration for Material Design Blog Theme
+# Optimized for performance and usability.
+
+# Image processing settings for better performance
+[imaging]
+  resampleFilter = "lanczos"  # High-quality downsampling filter
+  quality = 85                # Image quality (0-100)
+  anchor = "smart"           # Smart cropping for thumbnails
+
+# Minify CSS and JS for faster page load
+[minify]
+  disableCSS = false
+  disableJS = false
+
+# Cache settings for faster build times
+[caches]
+  [caches.getjson]
+    dir = ":cacheDir/:project"
+    maxAge = "10m"

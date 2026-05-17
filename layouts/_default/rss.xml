@@ -13,8 +13,9 @@
       <guid isPermaLink="false">{{ .Permalink }}</guid>
       <description><![CDATA[ {{ .Summary | plainify }} ]]></description>
       <content:encoded>
-      &lt;p&gt;本文... ここに ]]> があっても大丈夫 &lt;/p&gt;
-      &lt;pre&gt;&lt;code&gt;echo "]]&gt;"&lt;/code&gt;&lt;/pre&gt;
+      <![CDATA[ <p>本文... ここに ]]]]><![CDATA[> があっても大丈夫  </p>
+      <pre><code>echo "]]]]><![CDATA[> "</code></pre>
+      ]]>
       </content:encoded>
     </item>
     {{ end }}

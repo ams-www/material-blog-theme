@@ -12,11 +12,7 @@
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
       <guid isPermaLink="false">{{ .Permalink }}</guid>
       <description><![CDATA[ {{ .Summary | plainify }} ]]></description>
-      <content:encoded>
-      <![CDATA[ <p>本文... ここに ]]]]><![CDATA[> があっても大丈夫  </p>
-      <pre><code>echo "]]]]><![CDATA[> "</code></pre>
-      ]]>
-      </content:encoded>
+      <content:encoded><![CDATA[{{ .Content | replaceRE "\\]\\]>" "]]&gt;" }]]></content:encoded>
     </item>
     {{ end }}
   </channel>

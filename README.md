@@ -1,4 +1,4 @@
-# Material Design Blog Hugo
+# Material Design Blog for Hugo
 
 A blog hugo theme with Material Design
 

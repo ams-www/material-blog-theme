@@ -11,8 +11,10 @@
       <link>{{ .Permalink }}</link>
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
       <guid isPermaLink="false">{{ .Permalink }}</guid>
-      <description><![CDATA[ {{ .Summary | plainify }} ]]></description>
-      <content:encoded><![CDATA[{{ .Content | replace "]]>" "]]&gt;" }]]></content:encoded>
+      <!-- descriptionはplainifyしてエスケープ -->
+      <description><![CDATA[{{ .Summary | plainify | replace "]]>" "]]&gt;" }}]]></description>
+      <!-- content:encodedも同様にエスケープ処理を入れる -->
+      <content:encoded><![CDATA[{{ .Content | replace "]]>" "]]&gt;" }}]]></content:encoded>
     </item>
     {{ end }}
   </channel>

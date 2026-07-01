@@ -22,7 +22,11 @@
 
   {{ .Content }}
 
-  {{- if site.Params.giscus.enabled }}
+  {{- /* Check if giscus is enabled at page level or site level */ -}}
+  {{- $siteGiscus := site.Params.giscus | default dict -}}
+  {{- $pageGiscus := .Params.giscus | default dict -}}
+  {{- $giscus := merge $siteGiscus $pageGiscus -}}
+  {{- if $giscus.enabled }}
     {{- partial "giscus.html" . }}
   {{- end }}
 {{- end }}

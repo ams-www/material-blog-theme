@@ -22,5 +22,7 @@
 
   {{ .Content }}
 
-  {{- partial "giscus.html" . }}
+  {{- if site.Params.giscus.enabled }}
+    {{- partial "giscus.html" . }}
+  {{- end }}
 {{- end }}

@@ -1,0 +1,3 @@
+layouts/partials/giscus.html
+ config.toml
+ layouts/_default/single.html

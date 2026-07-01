@@ -1,5 +1,24 @@
-# Default configuration for Material Design Blog Theme
+# Default configuration for Hugo Material Design Blog Theme
 # Optimized for performance and usability.
+
+# Site parameters
+[params]
+  # Giscus comment system settings
+  # Set enabled = true to enable comments
+  [params.giscus]
+    enabled = false
+    repo = "kons10/hugo-me-wiki"
+    repoId = "R_kgDOSABtuA"
+    category = "giscus"
+    categoryId = "DIC_kwDOSABtuM4DAPv0"
+    mapping = "pathname"
+    strict = "0"
+    reactionsEnabled = "1"
+    emitMetadata = "1"
+    inputPosition = "top"
+    theme = "preferred_color_scheme"
+    lang = "ja"
+    loading = "lazy"
 
 # Image processing settings for better performance
 [imaging]

@@ -32,7 +32,7 @@
       data-emit-metadata="{{ $giscus.emitMetadata | default "1" }}"
       data-input-position="{{ $giscus.inputPosition | default "top" }}"
       data-theme="{{ $giscus.theme | default "preferred_color_scheme" }}"
-      data-lang="{{ $giscus.lang | default "ja" }}"
+      data-lang="{{ $giscus.lang | default site.Language.Lang | default "en" }}"
       data-loading="{{ $giscus.loading | default "lazy" }}"
       crossorigin="anonymous"
       async>

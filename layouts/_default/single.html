@@ -21,4 +21,8 @@
   {{- end }}
 
   {{ .Content }}
+
+  {{- if site.Params.giscus.enabled }}
+    {{- partial "giscus.html" . }}
+  {{- end }}
 {{- end }}

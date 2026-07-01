@@ -5,12 +5,13 @@
 [params]
   # Giscus comment system settings
   # Set enabled = true to enable comments
+  # These are default values; can be overridden per-page in front matter
   [params.giscus]
     enabled = false
-    repo = "kons10/hugo-me-wiki"
-    repoId = "R_kgDOSABtuA"
+    repo = ""          # e.g., "username/repo"
+    repoId = ""        # e.g., "R_kgDOSABtuA"
     category = "giscus"
-    categoryId = "DIC_kwDOSABtuM4DAPv0"
+    categoryId = ""    # e.g., "DIC_kwDOSABtuM4DAPv0"
     mapping = "pathname"
     strict = "0"
     reactionsEnabled = "1"

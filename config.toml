@@ -3,23 +3,6 @@
 
 # Site parameters
 [params]
-  # Giscus comment system settings
-  # Set enabled = true to enable comments
-  # These are default values; can be overridden per-page in front matter
-  [params.giscus]
-    enabled = false
-    repo = ""          # e.g., "username/repo"
-    repoId = ""        # e.g., "R_kgDOSABtuA"
-    category = "giscus"
-    categoryId = ""    # e.g., "DIC_kwDOSABtuM4DAPv0"
-    mapping = "pathname"
-    strict = "0"
-    reactionsEnabled = "1"
-    emitMetadata = "1"
-    inputPosition = "top"
-    theme = "preferred_color_scheme"
-    lang = "ja"
-    loading = "lazy"
 
 # Image processing settings for better performance
 [imaging]

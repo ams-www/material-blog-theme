@@ -20,24 +20,16 @@
   <meta name="robots" content="noindex, nofollow" />
 {{ end -}}
 
+
+{{- $style := resources.Get "css/md-settings.css" | minify | fingerprint -}}
 {{- $style := resources.Get "css/style.css" | minify | fingerprint -}}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
 
 <!-- Material Web Components -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-<script type="importmap">
-    {
-      "imports": {
-        "@material/web/": "https://esm.run/@material/web/"
-      }
-    }
-</script>
+
 <script type="module">
-  import '@material/web/all.js';
-
-
-  import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
-  document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+  import 'https://esm.run/@material/web/all.js';
 </script>
 
 

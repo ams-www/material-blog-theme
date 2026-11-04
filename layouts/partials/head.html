@@ -99,7 +99,8 @@
 {{ end -}}
 
 
-{{- $style := resources.Get "css/md-settings.css" | minify | fingerprint -}}
+{{- $mdSettings := resources.Get "css/md-settings.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $mdSettings.RelPermalink }}" integrity="{{ $mdSettings.Data.Integrity }}" crossorigin="anonymous">
 
 {{- $style := resources.Get "css/style.css" | minify | fingerprint -}}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">

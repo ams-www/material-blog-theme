@@ -15,7 +15,12 @@
     "@type": "WebSite",
     "name": {{ site.Title }},
     "url": {{ site.Home.Permalink }},
-    {{- with site.Params.description }}"description": {{ . }},{{ end }}
+    {{- $homePages := where site.RegularPages "Type" "in" site.Params.mainSections -}}
+    {{- with (index $homePages 0) -}}
+    "description": {{ .Description | default (.Summary | plainify) }},
+    {{- else -}}
+      {{- with site.Params.description }}"description": {{ . }},{{ end -}}
+    {{- end }}
     {{- with site.Params.author }}"publisher": {
       "@type": "Person",
       "name": {{ . }}

@@ -8,8 +8,6 @@
 baseURL = "https://example.com/"
 languageCode = "ja"
 title = "Material Design Blog"
-# メタ description のフォールバックにも使用される
-description = "A blog built with Hugo and the Material Design Blog Theme."
 # 著者名（JSON-LD / meta author に使用）
 # 例: [params] 内の author を参照
 
@@ -32,7 +30,6 @@ enableGitInfo = true
 
 [params]
   author = "Blog Author"
-  description = "A blog built with Hugo and the Material Design Blog Theme."
   mainSections = ["posts"]
   DateFormat = "2006/01/02"
   # メタ description / og:description の切り詰め長

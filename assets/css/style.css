@@ -149,3 +149,37 @@ table {
 .metadata {
   color: var(--md-sys-color-on-surface-variant);
 }
+
+/* ===== Breadcrumbs (パンくずリスト) ===== */
+.breadcrumbs {
+  margin: 8px 0 16px;
+  font-size: 0.85rem;
+}
+.breadcrumbs ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.breadcrumbs a {
+  text-decoration: none;
+  color: var(--md-sys-color-primary, inherit);
+}
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+.breadcrumbs [aria-current="page"] {
+  color: var(--md-sys-color-on-surface-variant, #666);
+}
+
+/* ===== Post navigation (prev / next) ===== */
+.post-nav {
+  justify-content: space-between;
+}

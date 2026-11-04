@@ -6,13 +6,96 @@
   content="width=device-width, initial-scale=1, shrink-to-fit=no"
 />
 <link rel="icon" href="/favicon.ico">
+
+{{/* ============================================================
+     Canonical URL（重複コンテンツ対策）
+     ============================================================ */}}
+<link rel="canonical" href="{{ .Permalink }}" />
+
+{{/* ============================================================
+     メタデータ: description / keywords
+     - description: front matter の description → summary → サイト説明 の順でフォールバック
+     - keywords: front matter の tags + categories を結合して出力
+     ============================================================ */}}
+{{- $desc := "" -}}
+{{- if .IsHome -}}
+  {{- $homePages := where site.RegularPages "Type" "in" site.Params.mainSections -}}
+  {{- if gt (len $homePages) 0 -}}
+    {{- $homePage := index $homePages 0 -}}
+    {{- $desc = $homePage.Description | default ($homePage.Summary | plainify | htmlUnescape) -}}
+  {{- end -}}
+  {{- $desc = $desc | default site.Params.description -}}
+{{- else -}}
+  {{- $desc = .Description | default (.Summary | plainify | htmlUnescape) | default site.Params.description -}}
+{{- end -}}
+{{- $desc = $desc | plainify | truncate (int (default 160 site.Params.descriptionLength)) | safeHTML -}}
+{{- if $desc }}
+<meta name="description" content="{{ $desc }}" />
+{{- end }}
+
+{{- $keywords := slice -}}
+{{- with .Params.tags -}}{{- $keywords = $keywords | append . -}}{{- end -}}
+{{- with .Params.categories -}}{{- $keywords = $keywords | append . -}}{{- end -}}
+{{- with site.Params.keywords -}}{{- $keywords = $keywords | append . -}}{{- end -}}
+{{- if $keywords }}
+<meta name="keywords" content="{{ delimit (uniq $keywords) ", " }}" />
+{{- end }}
+
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
 <meta name="author" content="{{ site.Params.author }}" />
-{{ if .IsHome -}}
-  <meta name="description" content="{{ site.Params.description }}" />
-{{ else -}}
-  <meta name="description" content="{{ default .Summary .Description }}" />
-{{ end -}}
+
+{{/* ============================================================
+     OGP (Open Graph Protocol)
+     ============================================================ */}}
+{{- $ogImage := "" -}}
+{{- with .Params.images -}}
+  {{- $ogImage = (index . 0) | absURL -}}
+{{- else -}}
+  {{- with site.Params.images -}}
+    {{- $ogImage = (index . 0) | absURL -}}
+  {{- else -}}
+    {{- with site.Params.ogImage -}}
+      {{- $ogImage = . | absURL -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $ogType := "website" -}}
+{{- if .IsPage -}}{{- $ogType = "article" -}}{{- end -}}
+<meta property="og:site_name" content="{{ site.Title }}" />
+<meta property="og:title" content="{{ .Title }}" />
+{{- if $desc }}
+<meta property="og:description" content="{{ $desc }}" />
+{{- end }}
+<meta property="og:type" content="{{ $ogType }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:locale" content="{{ site.LanguageCode | default site.Language.Lang | default "en_US" }}" />
+{{- if $ogImage }}
+<meta property="og:image" content="{{ $ogImage }}" />
+{{- end }}
+
+{{/* ============================================================
+     Twitter Cards
+     ============================================================ */}}
+<meta name="twitter:card" content="{{ if $ogImage }}summary_large_image{{ else }}summary{{ end }}" />
+<meta name="twitter:title" content="{{ .Title }}" />
+{{- if $desc }}
+<meta name="twitter:description" content="{{ $desc }}" />
+{{- end }}
+{{- if $ogImage }}
+<meta name="twitter:image" content="{{ $ogImage }}" />
+{{- end }}
+{{- with site.Params.twitterUsername }}
+<meta name="twitter:site" content="@{{ . }}" />
+<meta name="twitter:creator" content="@{{ . }}" />
+{{- end }}
+
+{{/* ============================================================
+     RSS / Atom フィードの自動検出リンク
+     （Hugo デフォルトの _internal/rss.xml が有効なことを前提とする）
+     ============================================================ */}}
+{{- with .OutputFormats.Get "rss" -}}
+  {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink site.Title | safeHTML }}
+{{- end -}}
 
 {{ if hugo.IsProduction -}}
   <meta name="robots" content="index, follow" />
@@ -21,7 +104,8 @@
 {{ end -}}
 
 
-{{- $style := resources.Get "css/md-settings.css" | minify | fingerprint -}}
+{{- $mdSettings := resources.Get "css/md-settings.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $mdSettings.RelPermalink }}" integrity="{{ $mdSettings.Data.Integrity }}" crossorigin="anonymous">
 
 {{- $style := resources.Get "css/style.css" | minify | fingerprint -}}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
@@ -69,3 +153,6 @@
   display: block !important; /* for list */
 }
 </style>
+
+{{/* JSON-LD 構造化データ（WebSite / BlogPosting / CollectionPage） */}}
+{{ partial "jsonld.html" . }}

@@ -5,14 +5,6 @@
   {{ end }}
 >
   <head>
-    <title>
-      {{- if .IsHome }}
-        {{ site.Title }}
-      {{- else }}
-        {{ .Title }} &ndash;
-        {{ site.Title }}
-      {{- end }}
-    </title>
     {{ partial "head" . }}
   </head>
   <body class="light dark">

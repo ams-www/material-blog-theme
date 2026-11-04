@@ -13,9 +13,6 @@
 
 <div class="list-container">
   <h1>{{ $title }}</h1>
-  {{ if .IsHome -}}
-    <h3>{{ site.Params.description }}</h3>
-  {{- end }}
 
   <!-- [JS無効時] 標準HTMLでリストを表示 -->
   <noscript>
@@ -25,6 +22,9 @@
           <a href="{{ .Permalink | relURL }}">
             {{- .Date | time.Format (default "2006/01/02" site.Params.DateFormat) -}} - {{ .Title }}
           </a>
+          {{- if $summary }}
+            <p>{{ .Summary | plainify | htmlUnescape | truncate 160 }}</p>
+          {{- end }}
         </li>
       {{- end }}
     </ul>
@@ -38,7 +38,7 @@
             {{- .Date | time.Format (default "2006/01/02" site.Params.DateFormat) -}}
           </time>
           <div slot="headline"> {{- .Title -}} </div>
-          <div slot="supporting-text"> {{ if $summary }}{{ .Summary | plainify | truncate 100 }}{{ end }} </div>
+          <div slot="supporting-text"> {{ if $summary }}{{ .Summary | plainify | htmlUnescape | truncate 160 }}{{ end }} </div>
          </md-list-item>
     {{- end }}
 </md-list>

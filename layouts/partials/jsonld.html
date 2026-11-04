@@ -16,8 +16,9 @@
     "name": {{ site.Title }},
     "url": {{ site.Home.Permalink }},
     {{- $homePages := where site.RegularPages "Type" "in" site.Params.mainSections -}}
-    {{- with (index $homePages 0) -}}
-    "description": {{ .Description | default (.Summary | plainify) }},
+    {{- if gt (len $homePages) 0 -}}
+      {{- $homePage := index $homePages 0 -}}
+    "description": {{ $homePage.Description | default ($homePage.Summary | plainify) }},
     {{- else -}}
       {{- with site.Params.description }}"description": {{ . }},{{ end -}}
     {{- end }}

@@ -19,7 +19,11 @@
      ============================================================ */}}
 {{- $desc := "" -}}
 {{- if .IsHome -}}
-  {{- $desc = site.Params.description -}}
+  {{- $homePages := where site.RegularPages "Type" "in" site.Params.mainSections -}}
+  {{- with (index $homePages 0) -}}
+    {{- $desc = .Description | default (.Summary | plainify | htmlUnescape) -}}
+  {{- end -}}
+  {{- $desc = $desc | default site.Params.description -}}
 {{- else -}}
   {{- $desc = .Description | default (.Summary | plainify | htmlUnescape) | default site.Params.description -}}
 {{- end -}}

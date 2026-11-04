@@ -1,26 +1,82 @@
 {{- define "main" }}
-  <h1>{{ .Title }}</h1>
+  {{/* パンくずリスト（HTML + JSON-LD BreadcrumbList） */}}
+  {{ partial "breadcrumbs.html" . }}
 
-  {{- if not .Date.IsZero }}
-    <div class="metadata">
-      Date:
-      {{ .Date | time.Format (default "2006/01/02" site.Params.DateFormat) }}
-    </div>
-  {{- end }}
+  <article class="post">
+    <header>
+      <h1>{{ .Title }}</h1>
 
-  {{- if .Params.tags }}
-    <div class="metadata">
-      Tags:
-      {{- range ($.GetTerms "tags") }}
-        <md-filled-tonal-button href="{{ .Permalink | relURL }}">
-          <md-icon slot="icon">tag</md-icon>
-          {{ .LinkTitle }}
-        </md-filled-tonal-button>
+      {{- if not .Date.IsZero }}
+        <div class="metadata">
+          <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}" itemprop="datePublished">
+            Date: {{ .Date | time.Format (default "2006-01-02" site.Params.DateFormat) }}
+          </time>
+          {{- if and (not .Lastmod.IsZero) (gt .Lastmod .Date) }}
+            &thinsp;／&thinsp;<span>Updated:</span>
+            <time datetime="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}" itemprop="dateModified">
+              {{ .Lastmod | time.Format (default "2006-01-02" site.Params.DateFormat) }}
+            </time>
+          {{- end }}
+        </div>
       {{- end }}
-    </div>
-  {{- end }}
 
-  {{ .Content }}
+      {{- if .Params.tags }}
+        <div class="metadata">
+          Tags:
+          {{- range ($.GetTerms "tags") }}
+            <md-filled-tonal-button href="{{ .Permalink | relURL }}">
+              <md-icon slot="icon">tag</md-icon>
+              {{ .LinkTitle }}
+            </md-filled-tonal-button>
+          {{- end }}
+        </div>
+      {{- end }}
+    </header>
+
+    {{/*
+      Markdown 内の ## / ### 見出しを h2 / h3 のまま正しい階層として保つ。
+      記事タイトルは h1 に固定し、本文は div.content に格納する。
+      front matter で headingOffset = true を設定すると、本文見出しを1段階ずつ繰り下げる
+      （Markdown の # -> h2, ## -> h3 ...）。デフォルトでは本文の最初の h1 を h2 に繰り下げ、
+      h1 が複数存在する状態を防ぐ。
+    */}}
+    {{- $content := .Content -}}
+    {{- if .Params.headingOffset -}}
+      {{- $content = $content | replaceRE "<h6" "<h6-off" | replaceRE "<h5" "<h6" | replaceRE "<h4" "<h5" | replaceRE "<h3" "<h4" | replaceRE "<h2" "<h3" | replaceRE "<h1" "<h2" | replaceRE "<h6-off" "<h6" -}}
+    {{- else -}}
+      {{- $content = $content | replaceRE "<h1" "<h2" -}}
+    {{- end -}}
+    <div class="content" itemprop="articleBody">
+      {{ $content | safeHTML }}
+    </div>
+  </article>
+
+  {{/* 前後の記事へのリンク（prev / next） */}}
+  {{- $section := .CurrentSection -}}
+  {{- $pages := slice -}}
+  {{- if $section -}}
+    {{- $pages = $section.RegularPages.ByDate -}}
+  {{- else -}}
+    {{- $pages = site.RegularPages.ByDate -}}
+  {{- end -}}
+  {{- $prev := $pages.Prev . -}}
+  {{- $next := $pages.Next . -}}
+  {{- if or $prev $next }}
+    <nav class="post-nav flex-row flex-wrap" style="gap: 16px; margin-top: 24px;" aria-label="前後の記事へのリンク">
+      {{- with $prev }}
+        <md-text-button href="{{ .Permalink | relURL }}" class="post-nav-prev">
+          <md-icon slot="icon">navigate_before</md-icon>
+          Prev: {{ .Title }}
+        </md-text-button>
+      {{- end }}
+      {{- with $next }}
+        <md-filled-button href="{{ .Permalink | relURL }}" class="post-nav-next">
+          Next: {{ .Title }}
+          <md-icon slot="icon">navigate_next</md-icon>
+        </md-filled-button>
+      {{- end }}
+    </nav>
+  {{- end }}
 
   {{ partial "post-bottom.html" . }}
 {{- end }}

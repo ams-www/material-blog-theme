@@ -11,6 +11,9 @@
   {{- end }}
   {{- $paginator := .Paginate $pages }}
 
+  {{/* パンくずリスト（HTML + JSON-LD BreadcrumbList） */}}
+  {{ partial "breadcrumbs.html" . }}
+
 <div class="list-container">
   <h1>{{ $title }}</h1>
   {{ if .IsHome -}}
@@ -34,7 +37,7 @@
   <md-list class="main-content-list" style="display: none;">
     {{- range $paginator.Pages }}
          <md-list-item type="link" href="{{ .Permalink | relURL }}">
-          <time class="metadata" datetime="{{ .Date }}">
+          <time class="metadata" datetime="{{ .Date }}" {{ if and (not .Lastmod.IsZero) (gt .Lastmod .Date) }}title="最終更新日: {{ .Lastmod | time.Format (default "2006-01-02" site.Params.DateFormat) }}"{{ end }}>
             {{- .Date | time.Format (default "2006/01/02" site.Params.DateFormat) -}}
           </time>
           <div slot="headline"> {{- .Title -}} </div>

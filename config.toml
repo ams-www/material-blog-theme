@@ -1,10 +1,50 @@
 # Default configuration for Hugo Material Design Blog Theme
 # Optimized for performance and usability.
 
-# Site parameters
-[params]
+# ============================================================
+# 基本設定（Canonical URL / OGP / hreflang の生成に必須）
+# デプロイ先の実際のドメインに必ず更新すること
+# ============================================================
+baseURL = "https://example.com/"
+languageCode = "ja"
+title = "Material Design Blog"
+# メタ description のフォールバックにも使用される
+description = "A blog built with Hugo and the Material Design Blog Theme."
+# 著者名（JSON-LD / meta author に使用）
+# 例: [params] 内の author を参照
 
-# Image processing settings for better performance
+# 最終更新日（lastmod）の判定方法: git のコミット履歴を利用する
+enableGitInfo = true
+
+# ページング件数
+[pagination]
+  pagerSize = 10
+
+# ============================================================
+# 出力形式: RSS フィード（head.html で自動検出リンクを出力）
+# ============================================================
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+# sitemap.xml は Hugo のデフォルト出力（_internal/sitemap.xml）を有効活用。
+# templates 側で阻害しないよう、sitemap テンプレートは置いていない。
+
+[params]
+  author = "Blog Author"
+  description = "A blog built with Hugo and the Material Design Blog Theme."
+  mainSections = ["posts"]
+  DateFormat = "2006/01/02"
+  # メタ description / og:description の切り詰め長
+  descriptionLength = 160
+  # サイト全体のキーワード（記事の tags/categories とマージされて meta keywords になる）
+  # keywords = ["hugo", "blog", "material design"]
+  # OGP デフォルト画像（記事に images が無い場合に使用）
+  # ogImage = "/images/og-default.png"
+  # Twitter アカウント（@ は除いて指定）
+  # twitterUsername = "yourhandle"
+
+# Image Processing（render-image.html のリサイズで使用）
 [imaging]
   resampleFilter = "lanczos"  # High-quality downsampling filter
   quality = 85                # Image quality (0-100)

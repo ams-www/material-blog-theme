@@ -1,0 +1,66 @@
+{{/*
+  パンくずリスト（Breadcrumbs）partial
+  - HTML の nav.breadcrumbs と、JSON-LD (BreadcrumbList) の両方を出力する
+  - 使い方: {{ partial "breadcrumbs.html" . }}
+*/}}
+{{- $current := . -}}
+{{- $page := .Page | default . -}}
+{{- $ancestors := slice -}}
+{{- if not $page.IsHome -}}
+  {{- $ancestors = $page.Ancestors -}}
+{{- end -}}
+
+<nav class="breadcrumbs" aria-label="パンくずリスト">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="{{ site.Home.Permalink | relURL }}">
+        <span itemprop="name">{{ site.Title }}</span>
+      </a>
+      <meta itemprop="position" content="1" />
+    </li>
+    {{- $pos := 2 -}}
+    {{- range $ancestors -}}
+      {{- if not .IsNode -}}
+        {{- $pos = add $pos 1 -}}
+        {{- continue -}}
+      {{- end -}}
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="separator">›</span>
+        <a itemprop="item" href="{{ .Permalink | relURL }}">
+          <span itemprop="name">{{ .LinkTitle | default .Title }}</span>
+        </a>
+        <meta itemprop="position" content="{{ $pos }}" />
+      </li>
+      {{- $pos = add $pos 1 -}}
+    {{- end -}}
+    {{- if not $page.IsHome -}}
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+        <span itemprop="separator">›</span>
+        <span itemprop="name">{{ $page.LinkTitle | default $page.Title }}</span>
+        <meta itemprop="item" content="{{ $page.Permalink }}" />
+        <meta itemprop="position" content="{{ $pos }}" />
+      </li>
+    {{- end -}}
+  </ol>
+</nav>
+
+{{/* JSON-LD 形式の BreadcrumbList（構造化データ） */}}
+<script type="application/ld+json">
+{{- $bcItems := slice -}}
+{{- $bcItems = $bcItems | append (dict "@type" "ListItem" "position" 1 "name" site.Title "item" site.Home.Permalink) -}}
+{{- $pos := 2 -}}
+{{- range $ancestors -}}
+  {{- if .IsNode -}}
+    {{- $bcItems = $bcItems | append (dict "@type" "ListItem" "position" $pos "name" (.LinkTitle | default .Title) "item" .Permalink) -}}
+    {{- $pos = add $pos 1 -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $page.IsHome -}}
+  {{- $bcItems = $bcItems | append (dict "@type" "ListItem" "position" $pos "name" ($page.LinkTitle | default $page.Title) "item" $page.Permalink) -}}
+{{- end -}}
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": {{ jsonify $bcItems }}
+}
+</script>

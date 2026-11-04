@@ -1,0 +1,84 @@
+{{/*
+  JSON-LD 構造化データ partial（Schema.org）
+  - ホーム / セクション一覧: WebSite + Organization（可能なら Blog）
+  - 記事ページ (single): Article / BlogPosting + 著者 + 更新日時
+  - 使い方: {{ partial "jsonld.html" . }}（head.html から自動呼び出し）
+*/}}
+{{- $page := .Page | default . -}}
+{{- $isoDate := "2006-01-02T15:04:05Z07:00" -}}
+
+{{- if $page.IsHome -}}
+  {{/* ===== ホーム: WebSite スキーマ ===== */}}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": {{ site.Title }},
+    "url": {{ site.Home.Permalink }},
+    {{- with site.Params.description }}"description": {{ . }},{{ end }}
+    {{- with site.Params.author }}"publisher": {
+      "@type": "Person",
+      "name": {{ . }}
+    }{{ end }}
+  }
+  </script>
+{{- else if $page.IsNode -}}
+  {{/* ===== 一覧ページ（セクション / ターム）: CollectionPage ===== */}}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": {{ $page.Title }},
+    "url": {{ $page.Permalink }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": {{ site.Title }},
+      "url": {{ site.Home.Permalink }}
+    }
+  }
+  </script>
+{{- else -}}
+  {{/* ===== 記事ページ: BlogPosting / Article ===== */}}
+  {{- $image := "" -}}
+  {{- with $page.Params.images -}}{{- $image = (index . 0) | absURL -}}{{- end -}}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": {{ $page.Permalink }}
+    },
+    "headline": {{ $page.Title }},
+    {{- with $image }}
+    "image": {{ . }},
+    {{- end }}
+    {{- with $page.Description }}
+    "description": {{ . | plainify }},
+    {{- else }}
+    "description": {{ $page.Summary | plainify }},
+    {{- end }}
+    {{- if not $page.Date.IsZero }}
+    "datePublished": "{{ $page.Date.Format $isoDate }}",
+    {{- end }}
+    {{- if not $page.Lastmod.IsZero }}
+    "dateModified": "{{ $page.Lastmod.Format $isoDate }}",
+    {{- end }}
+    "inLanguage": "{{ site.LanguageCode | default site.Language.Lang | default "en" }}",
+    "author": {
+      "@type": "Person",
+      "name": {{ $page.Params.author | default site.Params.author | default site.Title }}
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": {{ site.Params.author | default site.Title }}
+      {{- with site.Params.ogImage | default (and $page.Params.images (index $page.Params.images 0)) }},
+      "logo": {
+        "@type": "ImageObject",
+        "url": {{ . | absURL }}
+      }
+      {{- end }}
+    }
+  }
+  </script>
+{{- end -}}

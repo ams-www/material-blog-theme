@@ -1,3 +1,21 @@
-{{/* post-bottom.html - Partial for post bottom content */}}
-{{/* This partial is intentionally left empty for users to customize */}}
-{{/* Add custom content like comments, related posts, or social sharing here */}}
+{{- $giscus := site.Params.giscus -}}
+{{- if and $giscus $giscus.enabled $giscus.repo (index $giscus "repoId") $giscus.category (index $giscus "categoryId") (ne .Params.comments false) -}}
+  <section class="giscus-container" aria-label="Comments">
+    <script
+      src="https://giscus.app/client.js"
+      data-repo="{{ $giscus.repo }}"
+      data-repo-id="{{ index $giscus "repoId" }}"
+      data-category="{{ $giscus.category }}"
+      data-category-id="{{ index $giscus "categoryId" }}"
+      data-mapping="{{ default "pathname" $giscus.mapping }}"
+      data-strict="{{ default "0" $giscus.strict }}"
+      data-reactions-enabled="{{ default "1" $giscus.reactionsEnabled }}"
+      data-emit-metadata="{{ default "0" $giscus.emitMetadata }}"
+      data-input-position="{{ default "bottom" $giscus.inputPosition }}"
+      data-theme="{{ default "preferred_color_scheme" $giscus.theme }}"
+      data-lang="{{ default "ja" $giscus.lang }}"
+      crossorigin="anonymous"
+      async>
+    </script>
+  </section>
+{{- end -}}

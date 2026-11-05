@@ -20,10 +20,22 @@
         </div>
       {{- end }}
 
-      {{- if .Params.tags }}
-        <div class="metadata">
+      {{- with .GetTerms "categories" }}
+        <div class="metadata post-categories">
+          Categories:
+          {{- range . }}
+            <md-filled-tonal-button href="{{ .Permalink | relURL }}">
+              <md-icon slot="icon">folder</md-icon>
+              {{ .LinkTitle }}
+            </md-filled-tonal-button>
+          {{- end }}
+        </div>
+      {{- end }}
+
+      {{- with .GetTerms "tags" }}
+        <div class="metadata post-tags">
           Tags:
-          {{- range ($.GetTerms "tags") }}
+          {{- range . }}
             <md-filled-tonal-button href="{{ .Permalink | relURL }}">
               <md-icon slot="icon">tag</md-icon>
               {{ .LinkTitle }}

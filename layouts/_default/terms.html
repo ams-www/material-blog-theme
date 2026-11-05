@@ -1,14 +1,26 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
+  {{- $taxonomy := .Data.Plural -}}
+  {{- $label := "分類" -}}
+  {{- $icon := "sell" -}}
+  {{- if eq $taxonomy "categories" -}}
+    {{- $label = "Categories" -}}
+    {{- $icon = "folder" -}}
+  {{- else if eq $taxonomy "tags" -}}
+    {{- $label = "Tags" -}}
+    {{- $icon = "tag" -}}
+  {{- end -}}
 
-  <ul class="terms flex-row flex-wrap list-none">
-    {{- range .Pages }}
-      <li>
-        <md-filled-tonal-button href="{{ .Permalink | relURL }}">
-          <md-icon slot="icon">tag</md-icon>
-          {{ .Title }}
-        </md-filled-tonal-button>
-      </li>
-    {{- end }}
-  </ul>
+  <div class="list-container">
+    <h1>{{ .Title | default $label }}</h1>
+    <ul class="terms flex-row flex-wrap list-none">
+      {{- range .Pages }}
+        <li>
+          <md-filled-tonal-button href="{{ .Permalink | relURL }}">
+            <md-icon slot="icon">{{ $icon }}</md-icon>
+            {{ .LinkTitle }}
+          </md-filled-tonal-button>
+        </li>
+      {{- end }}
+    </ul>
+  </div>
 {{ end }}

@@ -18,21 +18,44 @@ git submodule update --init --recursive
 
 ## Configuration
 
+### Tags and categories
+
+The theme supports Hugo's built-in `tags` and `categories` taxonomies.
+
+Use them for different purposes:
+
+- **Categories**: broad topics that classify an article, such as Linux, Development, or Music.
+- **Tags**: specific keywords that describe the technologies, services, or details in an article.
+
+Both are displayed separately on article pages and have their own taxonomy pages:
+
+- `/categories/`
+- `/tags/`
+
+Add them to an article's front matter:
+
+```toml
+categories = ["Development"]
+tags = ["Hugo", "HTML", "CSS"]
+```
+
+Hugo enables both taxonomies by default, so no additional taxonomy configuration is required.
+
 ### Menu
 
 You can add entries to menus from `config.toml`.
 
 See [Add Non-content Entries to a Menu.](https://gohugo.io/content-management/menus/#add-non-content-entries-to-a-menu)
 
-This is a example configuration.
+This is an example configuration.
 
 ```toml
 [[menu.main]]
-  name = "Posts"
-  url = "/posts/"
+  name = "Categories"
+  url = "/categories/"
   weight = 1
   [menu.main.params]
-    icon = "article"
+    icon = "folder"
 
 [[menu.main]]
   name = "Tags"
@@ -55,7 +78,7 @@ This is a example configuration.
 
 You can add entries to use `config.toml`.
 
-This is a example configuration.
+This is an example configuration.
 
 ```toml
 [[Params.social]]
